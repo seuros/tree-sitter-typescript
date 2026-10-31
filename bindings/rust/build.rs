@@ -10,6 +10,12 @@ fn main() {
         .flag_if_supported("-std=c11")
         .flag_if_supported("-Wno-unused-parameter");
 
+    // FreeBSD-specific flags for proper symbol export
+    #[cfg(target_os = "freebsd")]
+    {
+        config.flag("-fPIC");
+    }
+
     for path in &[
         typescript_dir.join("parser.c"),
         typescript_dir.join("scanner.c"),
